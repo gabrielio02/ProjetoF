@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hospital VidaPlus</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------------------------
+       Estilos base
+       --------------------------- */
+    :root{
+      --white: #ffffff;
+      --bg: #f8f9fb;
+      --primary: #0a3f8f;
+      --accent: #ffd100;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --shadow: 0 6px 18px rgba(12, 28, 63, 0.08);
+      --radius: 12px;
+      --max-width: 1180px;
+      --black: #0b0b0b;
+    }
+
+    *{box-sizing: border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
+
+    .container{
+      width:92%;
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    header{
+      background:var(--white);
+      border-bottom:1px solid #e6e9ee;
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{
+      display:flex;align-items:center;gap:14px;
+    }
+    .logo{
+      font-family:"Playfair Display", serif;
+      font-weight:700;
+      font-size:22px;
+      padding:8px 14px;
+      background:var(--primary);
+      color:var(--white);
+      border-radius:8px;
+      position:relative;
+      text-shadow:
+         -2px -2px 0 #000,
+         2px -2px 0 #000,
+         -2px 2px 0 #000,
+         2px 2px 0 #000;
+    }
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{font-size:14px;color:#1f2937;padding:14px 8px;border-radius:6px}
+    .cta{
+      background:var(--primary);
+      color:var(--white);
+      padding:10px 14px;
+      border-radius:8px;
+      font-weight:600;
+      box-shadow:var(--shadow);
+    }
+
+    /* ---------------------------
+       Hero
+       --------------------------- */
+    .hero{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: 1fr 520px;
+      gap:28px;
+      align-items:center;
+      padding:28px 0;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(10,63,143,0.95), rgba(10,63,143,0.95));
+      color:var(--white);
+      padding:40px;
+      border-radius:20px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card h1{
+      font-family:"Playfair Display", serif;
+      font-size:34px;
+      margin:0 0 12px 0;
+      line-height:1.05;
+    }
+    .hero-card p{color:rgba(255,255,255,0.92);margin:0 0 18px 0}
+    .hero-card .btn{
+      background:var(--accent);
+      color:#000;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:700;
+      display:inline-block;
+      box-shadow:0 8px 18px rgba(255,209,0,0.12);
+    }
+    .hero-visual{
+      background:var(--white);
+      border-radius:20px;
+      padding:12px;
+      box-shadow:var(--shadow);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .hero-visual img{border-radius:14px;object-fit:cover;height:360px;width:100%}
+
+    .quick-actions{
+      display:flex;
+      gap:16px;
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+    .qcard{
+      background:var(--card);
+      border-radius:12px;
+      padding:12px 16px;
+      min-width:160px;
+      box-shadow:0 6px 16px rgba(12,28,63,0.05);
+      display:flex;flex-direction:column;gap:8px;align-items:flex-start;
+    }
+    .qcard small{color:var(--muted)}
+
+    @media (max-width: 1000px){
+      .hero{grid-template-columns:1fr;grid-auto-rows:auto}
+      .hero-visual img{height:260px}
+      .quick-actions{flex-direction:column}
+    }
+    @media (max-width: 640px){
+      nav{display:none}
+      .topbar{padding:10px 0}
+      .logo{font-size:20px}
+      .hero-card h1{font-size:26px}
+      .hero-card{padding:24px}
+      .hero-visual img{height:200px}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <div class="logo">VidaPlus</div>
+        <div class="text-xs muted">Cuidados que te acompanham</div>
+      </div>
+
+      <nav>
+        <a href="paginainicial.html">Início</a>
+        <a href="especialidades.html">Especialidades</a>
+        <a href="corpo-clinico.html">Corpo Clínico</a>
+        <a href="unidades.html">Unidades</a>
+        <a href="planos.html">Planos</a> <!-- Link para a página de planos -->
+        <a href="contato.html">Contato</a>
+        <a class="cta" href="agendamento.html">Agende sua consulta</a> <!-- Redireciona para agendamento -->
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <section class="hero" aria-label="Banner principal">
+      <div>
+        <div class="hero-card" role="region" aria-label="Mensagem principal VidaPlus">
+          <h1>A sua vida muda. O nosso cuidado acompanha.</h1>
+          <p>Atendimento humanizado e tecnologia a favor da sua saúde. Planos, especialistas e serviços para toda a família.</p>
+          <a class="btn" href="#" style="text-decoration:none">Saiba mais</a>
+        </div>
+        <div class="quick-actions">
+          <div class="qcard">
+            <small>Agendamento</small>
+            <strong>Consultas e Exames</strong>
+          </div>
+          <div class="qcard">
+            <small>Resultado</small>
+            <strong>Resultado de Exame</strong>
+          </div>
+          <div class="qcard">
+            <small>Boletos</small>
+            <strong>2ª via de boleto</strong>
+          </div>
+          <div class="qcard">
+            <small>Autorizações</small>
+            <strong>Solicitar Autorização</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="false">
+        <img src="imageminicial.webp">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 style="margin:0 0 8px 0">Nos acompanhe nas redes</h3>
+          <p class="muted">Siga o VidaPlus para conteúdo, dicas e novidades sobre saúde.</p>
+          <nav style="margin-top:12px;display:flex;gap:10px">
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="YouTube">YouTube</a>
+            <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          </nav>
+        </div>
+
+        <div class="center">
+          <div style="margin-bottom:8px"><strong>Hospital VidaPlus</strong></div>
+          <div class="muted text-xs">Av. Exemplo, 123 — Centro<br>CEP 00000-000 — Cidade, Estado</div>
+          <div style="margin-top:12px"><a class="cta" href="agendamento.html">Agende sua consulta</a></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

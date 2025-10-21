@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Protótipo Simples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dcdcdc; /* Cor de fundo cinza */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .switch-link {
+            cursor: pointer;
+            color: #007BFF;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        /* Estilo para o botão de mostrar senha */
+        .show-password-btn {
+            background: none;
+            border: none;
+            color: #007BFF;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container para Login e Cadastro -->
+    <div class="login-container">
+        <h2 id="form-title">Login</h2>
+        
+        <!-- Formulário de Login -->
+        <div id="login-form">
+            <div class="input-group">
+                <label for="user">Digite seu CPF ou ID</label>
+                <input type="text" id="user" placeholder="Digite seu CPF ou ID">
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Digite sua senha">
+                <button type="button" class="show-password-btn" onclick="togglePasswordVisibility('password')">Mostrar Senha</button>
+            </div>
+            <button onclick="login()">Acessar conta</button>
+            <div class="footer">
+                <p>Não tem uma conta? <span class="switch-link" onclick="toggleForm('register')">Cadastre-se</span></p>
+            </div>
+        </div>
+
+        <!-- Formulário de Cadastro -->
+        <div id="register-form" style="display: none;">
+            <div class="input-group">
+                <label for="new-user">Digite seu CPF ou ID</label>
+                <input type="text" id="new-user" placeholder="Digite seu CPF ou ID">
+            </div>
+            <div class="input-group">
+                <label for="new-password">Senha</label>
+                <input type="password" id="new-password" placeholder="Digite sua senha">
+                <button type="button" class="show-password-btn" onclick="togglePasswordVisibility('new-password')">Mostrar Senha</button>
+            </div>
+            <button onclick="register()">Cadastrar</button>
+            <div class="footer">
+                <p>Já tem uma conta? <span class="switch-link" onclick="toggleForm('login')">Faça login</span></p>
+            </div>
+            <div id="password-error" class="error-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar entre os formulários de login e cadastro
+        function toggleForm(formType) {
+            if (formType === 'register') {
+                document.getElementById('form-title').innerText = 'Cadastro';
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'block';
+            } else {
+                document.getElementById('form-title').innerText = 'Login';
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('register-form').style.display = 'none';
+            }
+        }
+
+        // Função de login
+        function login() {
+            const user = document.getElementById('user').value;
+            const password = document.getElementById('password').value;
+
+            // Verificar no localStorage se o usuário e senha estão cadastrados
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userFound = users.find(u => (u.user === user) && (u.password === password));
+
+            if (userFound) {
+                // Verificar o ID e redirecionar conforme o número após "F"
+                const userId = user.toUpperCase();
+                if (/^F[1-5]$/.test(userId.slice(-2))) {
+                    const digit = userId.slice(-1); // Pega o último dígito (1, 2, 3, 4 ou 5)
+
+                    // Redirecionar para páginas diferentes com base no dígito
+                    if (digit === '1') {
+                        window.location.href = 'administrativo.html'; // Redireciona para a página de administrativo
+                    } else if (digit === '2') {
+                        window.location.href = 'paginamedico.html'; // Redireciona para a página do médico
+                    } else {
+                        alert('Acesso não autorizado para este ID.');
+                    }
+                } else {
+                    alert('ID inválido. O ID deve terminar com "F" seguido de 1, 2, 3, 4 ou 5.');
+                }
+            } else {
+                alert('Usuário ou senha incorretos!');
+            }
+        }
+        
+        // Função de cadastro
+        function register() {
+            const newUser = document.getElementById('new-user').value;
+            const newPassword = document.getElementById('new-password').value;
+
+            // Verificar se a senha é válida
+            const passwordValid = validatePassword(newPassword);
+            if (!passwordValid) return; // Se a senha for inválida, não prossegue com o cadastro
+
+            // Validar se os campos não estão vazios
+            if (!newUser || !newPassword) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            // Recuperar usuários existentes do localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Verificar se o usuário já existe
+            const userExists = users.some(u => u.user === newUser);
+            if (userExists) {
+                alert('Usuário já cadastrado!');
+                return;
+            }
+
+            // Adicionar o novo usuário ao array
+            users.push({ user: newUser, password: newPassword });
+
+            // Salvar o novo usuário no localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Cadastro bem-sucedido! Agora, faça login.');
+            toggleForm('login'); // Voltar para o formulário de login
+        }
+
+        // Função para validar a senha
+        function validatePassword(password) {
+            const passwordError = document.getElementById('password-error');
+            const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{6,})/; // Senha com pelo menos 6 caracteres, 1 maiúscula e 1 caractere especial
+            
+            if (!regex.test(password)) {
+                passwordError.style.display = 'block';
+                passwordError.textContent = "A senha precisa de no mínimo 6 caracteres, no mínimo 1 letra maiúscula e no mínimo 1 caractere especial";
+                return false;
+            }
+            
+            passwordError.style.display = 'none';
+            return true;
+        }
+
+        // Função para alternar a visibilidade da senha
+        function togglePasswordVisibility(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const passwordButton = event.target;
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordButton.textContent = 'Ocultar Senha';
+            } else {
+                passwordField.type = 'password';
+                passwordButton.textContent = 'Mostrar Senha';
+            }
+        }
+    </script>
+</body>
+</html>
